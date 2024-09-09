@@ -1,0 +1,3 @@
+/queue simple add name=total-bandwith target=0.0.0.0/0 max-limit=20M/20M 
+/queue simple add name=zoom target=0.0.0.0/0 max-limit=20M/20M limit-at=1M/1M packet-marks=paket_zoom parent=total-bandwith priority=1/1 queue=pcq-upload-default/pcq-download-default
+/queue simple add name=other target=0.0.0.0/0 max-limit=20M/20M limit-at=1M/1M parent=total-bandwith priority=8/8 queue=pcq-upload-default/pcq-download-default
