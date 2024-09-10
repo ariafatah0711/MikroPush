@@ -25,8 +25,8 @@ class mikroPush:
     
     def login(self):
         try:
-            self.ssh.connect(**self.host)
             print(f"{bcolors.OKGREEN}[+] try connect to {self.host['hostname']}")
+            self.ssh.connect(**self.host)
             sleep(0.5)
             print(f"{bcolors.OKGREEN}[+] login berhasil\n{bcolors.ENDC}")
             if not args.c and not args.s and not args.f and not args.info and not args.remove: print(f"{bcolors.ORANGE}[-] pilih salah satu argument mode yang akan digunakan: {bcolors.ENDC}\n-c 'command' \n-s script.txt, \n-f dir, \n--info, \n--remove"); exit()
@@ -47,8 +47,13 @@ class mikroPush:
         sleep(.75)
         try:
             script = open(file, "r").readlines()
+            # cwd = "/"
             for line, command in enumerate(script, start=1):
                 if (command.startswith("# ") or command.startswith("; ") or not command.strip()): continue
+
+                # if command.startswith("/"): cwd = command.rstrip()
+                # else: command = f"{cwd} {command}"
+
                 stdin, stdout, stderr = self.ssh.exec_command(command.strip())
                 self.output(stdout, command, line)
                 self.count += 1
@@ -81,7 +86,9 @@ class mikroPush:
     
     def footer(self):
         success = self.count - self.error
-        per = success / self.count * 100
+        if self.count != 0: per = (success / self.count) * 100
+        else: return
+        
         printerror = f"{bcolors.FAIL}{self.error} error {bcolors.ENDC}"
         
         if self.last == 1: print("\n\n", end="")

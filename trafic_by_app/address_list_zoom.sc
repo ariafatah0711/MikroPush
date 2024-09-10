@@ -1,4 +1,14 @@
+# gmeet
+/ip firewall address-list add address=74.125.250.0/24 list=gmeet_ip
+/ip firewall address-list add address=142.250.82.0/24 list=gmeet_ip
+/ip firewall address-list add address=74.125.247.129 list=gmeet_ip
 
+# ip microsoft team
+/ip firewall address-list add address=13.107.64.0/18 list=microsoft_team_ip
+/ip firewall address-list add address=52.112.0.0/14 list=microsoft_team_ip
+/ip firewall address-list add address=52.120.0.0/14 list=microsoft_team_ip
+/ip firewall address-list add address=52.238.119.141/32 list=microsoft_team_ip
+/ip firewall address-list add address=52.244.160.207/32 list=microsoft_team_ip
 
 # ip zoom
 /ip firewall address-list add address=3.7.35.0/25 list=zoom_ip
