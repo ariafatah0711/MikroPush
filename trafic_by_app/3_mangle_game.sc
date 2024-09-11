@@ -18,7 +18,7 @@
 /ip firewall mangle add chain=prerouting protocol=udp dst-port=9330-9340 in-interface=!ether1 action=mark-connection new-connection-mark=conn_game_coc passthrough=yes
 
 # mark packet
-ip firewall mangle add chain=prerouting connection-mark=conn_game_ml action=mark-packet new-packet-mark=packet_game comment=packet_game
-ip firewall mangle add chain=prerouting connection-mark=conn_game_ff action=mark-packet new-packet-mark=packet_game
-ip firewall mangle add chain=prerouting connection-mark=conn_game_pubg action=mark-packet new-packet-mark=packet_game
-ip firewall mangle add chain=prerouting connection-mark=conn_game_coc action=mark-packet new-packet-mark=packet_game
+ip firewall mangle add chain=prerouting connection-mark=conn_game_ml action=mark-packet new-packet-mark=packet_game passthrough=no comment=packet_game
+ip firewall mangle add chain=prerouting connection-mark=conn_game_ff action=mark-packet new-packet-mark=packet_game passthrough=no
+ip firewall mangle add chain=prerouting connection-mark=conn_game_pubg action=mark-packet new-packet-mark=packet_game passthrough=no
+ip firewall mangle add chain=prerouting connection-mark=conn_game_coc action=mark-packet new-packet-mark=packet_game passthrough=no

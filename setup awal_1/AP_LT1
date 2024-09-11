@@ -1,0 +1,20 @@
+/system identity set name=AP_LT1
+/ip dhcp-client add disabled=no interface=ether1
+/ip firewall nat add action=masquerade chain=srcnat out-interface=ether1
+
+/interface bridge add name=LAN
+/interface bridge port add interface=ether2 bridge=LAN
+/interface bridge port add interface=ether3 bridge=LAN
+/interface bridge port add interface=ether4 bridge=LAN
+/interface bridge port add interface=wlan1 bridge=LAN
+
+/ip address add address=192.168.20.1/24 interface=LAN
+/ip pool add name=pool_lan ranges=192.168.20.10-192.168.20.254
+/ip dhcp-server add name=dhcp-server-lan interface=LAN address-pool=pool_lan disabled=no
+/ip dhcp-server network add address=192.168.20.0/24 gateway=192.168.20.1 dns-server=192.168.20.1,8.8.8.8
+
+/interface wireless security-profiles add name=CAFE authentication-types=wpa-psk,wpa2-psk wpa-pre-shared-key=12345678 wpa2-pre-shared-key=12345678 mode=dynamic-keys
+/interface wireless set [ find default-name=wlan1 ] band=2ghz-b/g/n disabled=no mode=ap-bridge security-profile=CAFE ssid=CAFE
+
+/routing ospf network add network=10.10.10.0/24 area=backbone
+/routing ospf network add network=192.168.20.0/24 area=backbone
