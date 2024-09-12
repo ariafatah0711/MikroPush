@@ -6,5 +6,5 @@
 /ip firewall mangle add chain=prerouting action=mark-packet new-packet-mark=packet_other passthrough=no connection-mark=conn_other
 
 # packet_laan
-/ip firewall mangle add chain=prerouting action=mark-connection new-connection-mark=conn_lan passthrough=yes comment=packet_lan_to_lan
-/ip firewall mangle add chain=prerouting action=mark-packet new-packet-mark=packet_lan passthrough=no connection-mark=conn_lan
+; /ip firewall mangle add chain=prerouting action=mark-connection new-connection-mark=conn_lan passthrough=yes comment=packet_lan_to_lan
+; /ip firewall mangle add chain=prerouting action=mark-packet new-packet-mark=packet_lan passthrough=no connection-mark=conn_lan

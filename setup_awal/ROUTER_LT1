@@ -1,9 +1,9 @@
-/system identity set name=ROUTER_LT2
+/system identity set name=ROUTER_LT1
 /ip dhcp-client add disabled=no interface=ether1
+/ip firewall nat add action=masquerade chain=srcnat out-interface=LAN
 
 /interface bridge add name=LAN
 /interface bridge port add interface=ether1 bridge=LAN
-/interface bridge port add interface=ether2 bridge=LAN
 /interface bridge port add interface=ether2 bridge=LAN
 /interface bridge port add interface=ether3 bridge=LAN
 /interface bridge port add interface=ether4 bridge=LAN
