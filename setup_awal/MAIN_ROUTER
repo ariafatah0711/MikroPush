@@ -5,9 +5,9 @@
 /ip address add address=192.168.10.1/24 interface=ether2
 /ip pool add name=pool_ether2 ranges=192.168.10.10-192.168.10.254
 /ip dhcp-server add name=dhcp-server-ether2 interface=ether2 address-pool=pool_ether2 disabled=no
-/ip dhcp-server network add address=192.168.10.0/24 gateway=192.168.10.1 dns-server=192.168.10.1,8.8.8.8
+/ip dhcp-server network add address=192.168.10.0/24 gateway=192.168.10.1 dns-server=192.168.10.1,8.8.8.8,8.8.4.4
 
 /ip address add address=192.168.20.1/24 interface=ether3
 /ip pool add name=pool_ether3 ranges=192.168.20.10-192.168.20.254
 /ip dhcp-server add name=dhcp-server-ether3 interface=ether3 address-pool=pool_ether3 disabled=no
-/ip dhcp-server network add address=192.168.20.0/24 gateway=192.168.20.1 dns-server=192.168.20.1,8.8.8.8
+/ip dhcp-server network add address=192.168.20.0/24 gateway=192.168.20.1 dns-server=192.168.20.1,8.8.8.8,8.8.4.4

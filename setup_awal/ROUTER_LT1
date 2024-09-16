@@ -1,6 +1,5 @@
 /system identity set name=ROUTER_LT1
 /ip dhcp-client add disabled=no interface=ether1
-/ip firewall nat add action=masquerade chain=srcnat out-interface=LAN
 
 /interface bridge add name=LAN
 /interface bridge port add interface=ether1 bridge=LAN
@@ -11,4 +10,6 @@
 /ip address add address=192.168.10.2/24 interface=LAN
 /ip pool add name=pool_lan ranges=192.168.10.10-192.168.10.254
 /ip dhcp-server add name=dhcp-server-lan interface=LAN address-pool=pool_lan disabled=no
-/ip dhcp-server network add address=192.168.10.0/24 gateway=192.168.10.1 dns-server=192.168.10.1,8.8.8.8
+/ip dhcp-server network add address=192.168.10.0/24 gateway=192.168.10.1 dns-server=192.168.10.1,8.8.8.8,8.8.4.4
+
+/ip firewall nat add action=masquerade chain=srcnat out-interface=LAN
