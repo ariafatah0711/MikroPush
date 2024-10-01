@@ -15,6 +15,7 @@ class mikroPush:
             "username":args.u,
             "password":args.p,
             "timeout":5,
+            "banner_timeout": 200
         }
         self.ssh = paramiko.SSHClient()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -47,17 +48,12 @@ class mikroPush:
         sleep(.75)
         try:
             script = open(file, "r").readlines()
-            # cwd = "/"
             for line, command in enumerate(script, start=1):
                 if (command.startswith("# ") or command.startswith("; ") or not command.strip()): continue
-
-                # if command.startswith("/"): cwd = command.rstrip()
-                # else: command = f"{cwd} {command}"
-
+                
                 stdin, stdout, stderr = self.ssh.exec_command(command.strip())
                 self.output(stdout, command, line)
                 self.count += 1
-            
             self.footer()
         except FileNotFoundError:
             print(f"{bcolors.ORANGE}[-] file script tidak ditemukan \n{bcolors.ENDC}")
@@ -68,7 +64,7 @@ class mikroPush:
             if len(outputStdout) == 0 and verbose > 0:
                 print(f"{bcolors.OKGREEN}[✓] {bcolors.ORANGE}{command}{bcolors.ENDC}", end="")
                 self.last = 1
-                sleep(.10)
+                sleep(.01)
             elif len(outputStdout) == 1:
                 print(f"{bcolors.FAIL}[☓] {bcolors.ORANGE}{command}{bcolors.ENDC} | line {line}: {outputStdout[0]}", end="")
                 self.error += 1
@@ -79,7 +75,7 @@ class mikroPush:
                 if verbose >= 2: print("".join(outputStdout).lstrip(), end="")
 
                 self.last = 3
-                sleep(.25)
+                sleep(.15)
             else:
                 pass
             return self.error
