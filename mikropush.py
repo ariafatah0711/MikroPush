@@ -117,8 +117,8 @@ if __name__ == "__main__":
 
     current_dir = Path(__file__).parent
     list_path = [
-        current_dir.joinpath("./scripts/remove.sc"),
-        current_dir.joinpath( "./scripts/info.sc")
+        current_dir.joinpath("./template-scripts/remove.sc"),
+        current_dir.joinpath("./template-scripts/info.sc")
     ]
 
     def pushCommand(command, v):
