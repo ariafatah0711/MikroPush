@@ -27,16 +27,54 @@ class mikroPush:
     def login(self):
         try:
             print(f"{bcolors.OKGREEN}[+] try connect to {self.host['hostname']}")
-            self.ssh.connect(**self.host)
+            '''ssh default'''
+            # self.ssh.connect(**self.host)
+
+            '''load key'''
+            self.ssh.load_system_host_keys()
+
+            '''1'''
+            # self.ssh.set_missing_host_key_policy(paramiko.WarningPolicy())  # Bisa juga pakai AutoAddPolicy
+            # self.ssh.connect(**self.host, allow_agent=False, look_for_keys=False)
+
+            '''2'''
+            self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            self.ssh.connect(**self.host, allow_agent=False, look_for_keys=False)
+            
             sleep(0.5)
             print(f"{bcolors.OKGREEN}[+] login berhasil\n{bcolors.ENDC}")
-            if not args.c and not args.s and not args.f and not args.info and not args.remove: print(f"{bcolors.ORANGE}[-] pilih salah satu argument mode yang akan digunakan: {bcolors.ENDC}\n-c 'command' \n-s script.txt, \n-f dir, \n--info, \n--remove"); exit()
+            if not args.c and not args.s and not args.f and not args.info and not args.remove and not args.reset: print(f"{bcolors.ORANGE}[-] pilih salah satu argument mode yang akan digunakan: {bcolors.ENDC}\n-c 'command' \n-s script.txt, \n-f dir, \n--info, \n--remove"); exit()
         except paramiko.SSHException:
             print(f"{bcolors.FAIL}[-] Incorrect password")
             self.close()
         except (paramiko.SSHException, paramiko.ssh_exception.NoValidConnectionsError, socket_error) as e:
             print(f"{bcolors.FAIL}[-] Error: {str(e)}")
             self.close()
+    
+    # def login(self):
+    #     try:
+    #         print(f"{bcolors.OKGREEN}[+] try connect to {self.host['hostname']}")
+            
+    #         '''Set Host Key Policy'''
+    #         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    #         '''Connect SSH'''
+    #         self.ssh.connect(**self.host, allow_agent=False, look_for_keys=False)
+            
+    #         '''Mulai sesi interaktif'''
+    #         self.shell = self.ssh.invoke_shell()
+    #         sleep(1)
+    #         print(f"{bcolors.OKGREEN}[+] login berhasil\n{bcolors.ENDC}")
+
+    #         # Cek apakah sesi berhasil masuk
+    #         self.shell.recv(65535).decode('utf-8')
+
+    #     except paramiko.SSHException:
+    #         print(f"{bcolors.FAIL}[-] Incorrect password")
+    #         self.close()
+    #     except (paramiko.SSHException, paramiko.ssh_exception.NoValidConnectionsError, socket_error) as e:
+    #         print(f"{bcolors.FAIL}[-] Error: {str(e)}")
+    #         self.close()
     
     def runCommand(self, command = ""):
         stdin, stdout, stderr = self.ssh.exec_command(command)
@@ -112,13 +150,14 @@ if __name__ == "__main__":
     filter(args)
     
     # scripts
-    list_name = ["remove", "info"]
+    list_name = ["remove", "info", "reset"]
     list_verbose = [1, 2]
 
     current_dir = Path(__file__).parent
     list_path = [
         current_dir.joinpath("./template-scripts/remove.sc"),
-        current_dir.joinpath("./template-scripts/info.sc")
+        current_dir.joinpath("./template-scripts/info.sc"),
+        current_dir.joinpath("./template-scripts/reset.sc")
     ]
 
     def pushCommand(command, v):
@@ -143,6 +182,11 @@ if __name__ == "__main__":
     
     # custom priority running
     host = mikroPush(args)
+    
+    if args.reset:
+        print(f"{bcolors.ENDC}[ --reset ]")
+        pushScript(list_name[2], list_path[2], list_verbose[1])
+
     if args.remove: 
         print(f"{bcolors.ENDC}[ --remove ]")
         pushScript(list_name[0], list_path[0], list_verbose[0])

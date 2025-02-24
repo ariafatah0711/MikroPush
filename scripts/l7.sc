@@ -1,0 +1,11 @@
+/ip firewall layer7-protocol
+add name=facebook regexp="^.+(facebook\\.com).+\$"
+add name=youtube regexp="^.+(youtube\\.com).+\$"
+add name=instagram regexp="^.+(instagram\\.com).+\$"
+add name=whatsapp regexp="^.+(whatsapp\\.net).+\$"
+add name=tiktok regexp="^.+(tiktok\\.com).+\$"
+add name=netflix regexp="^.+(netflix\\.com).+\$"
+add name=http regexp="^(GET|POST|HEAD|PUT|DELETE|OPTIONS|CONNECT).+\$"
+add name=ftp regexp="^(USER|PASS|RETR|STOR).+\$"
+add name=sftp regexp="^SSH-2\\.0.+\$"
+add name=ssh regexp="^SSH-2\\.0.+\$"

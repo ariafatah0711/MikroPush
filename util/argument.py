@@ -11,8 +11,9 @@ class desc:
     c = "Perintah sederhana (contoh: 'ip add print"
     s = "File script yang berisi perintah untuk dieksekusi"
     f = "Folder yang berisi beberapa script untuk dieksekusi"
-    info = "Tampilkan informasi sistem MikroTik (location: scripts/info.sc)"
-    remove = "Hapus konfigurasi dari MikroTik (location: scripts/remove.sc)"
+    info = "Tampilkan informasi sistem MikroTik (location: template-scripts/info.sc)"
+    remove = "Hapus konfigurasi dari MikroTik (location: template-scripts/remove.sc)"
+    reset = "reset konfigurasi dari mikrotik (location: template-scripts/reset.sc)"
     
     epilog = f'''
 Contoh Penggunaan:
@@ -50,5 +51,6 @@ def getArgument():
     # Opsi tambahan
     parser.add_argument("-I", "--info", action="store_true", help=desc.info)
     parser.add_argument("-R", "--remove", action="store_true", help=desc.remove)
+    parser.add_argument("-re", "--reset", action="store_true", help=desc.reset)
 
     return parser.parse_args()
