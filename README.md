@@ -14,7 +14,7 @@
 ## 🚀 Description
 - automation networking untuk push script ke dalam mikrotik
 
-[![Watch the video](util/preview.png)](https://youtu.be/rixg3n8MfS4)
+[![Watch the video](./preview.png)](https://youtu.be/rixg3n8MfS4)
 
 <p id="table-of-contents"></p>
 
